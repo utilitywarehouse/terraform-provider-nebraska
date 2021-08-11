@@ -24,7 +24,7 @@ func dataSourceGroup() *schema.Resource {
 				Computed: true,
 			},
 			"description": {
-				Type:     schema.TypeInt,
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"created_ts": {
@@ -82,6 +82,7 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, meta inter
 	if err != nil {
 		return diag.FromErr(err)
 	}
+	d.Set("application_id", appID)
 	groups, err := c.ListGroups(appID)
 	if err != nil {
 		return diag.FromErr(err)

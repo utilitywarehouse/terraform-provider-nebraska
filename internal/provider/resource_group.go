@@ -98,6 +98,7 @@ func resourceGroupCreate(ctx context.Context, d *schema.ResourceData, meta inter
 	if err != nil {
 		return diag.FromErr(err)
 	}
+	d.Set("application_id", appID)
 
 	input := &nebraska.AddGroupInput{
 		Name:                      d.Get("name").(string),
@@ -130,6 +131,7 @@ func resourceGroupRead(ctx context.Context, d *schema.ResourceData, meta interfa
 	if err != nil {
 		return diag.FromErr(err)
 	}
+	d.Set("application_id", appID)
 	group, err := c.GetGroup(appID, d.Id())
 	if err != nil {
 		if err == nebraska.ErrNotFound {
@@ -205,6 +207,7 @@ func resourceGroupUpdate(ctx context.Context, d *schema.ResourceData, meta inter
 	if err != nil {
 		return diag.FromErr(err)
 	}
+	d.Set("application_id", appID)
 
 	input := &nebraska.UpdateGroupInput{
 		Name:                      d.Get("name").(string),

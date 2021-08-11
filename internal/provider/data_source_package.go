@@ -30,7 +30,7 @@ func dataSourcePackage() *schema.Resource {
 				Computed: true,
 			},
 			"type": {
-				Type:     schema.TypeInt,
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"url": {
@@ -128,6 +128,7 @@ func dataSourcePackageRead(ctx context.Context, d *schema.ResourceData, meta int
 	if err != nil {
 		return diag.FromErr(err)
 	}
+	d.Set("application_id", appID)
 	packages, err := c.ListPackages(appID)
 	if err != nil {
 		return diag.FromErr(err)
@@ -138,7 +139,7 @@ func dataSourcePackageRead(ctx context.Context, d *schema.ResourceData, meta int
 	for _, p := range packages {
 		if p.Version == version && p.Arch.String() == arch {
 			d.SetId(p.ID)
-			d.Set("type", p.Type)
+			d.Set("type", p.Type.String())
 			d.Set("url", p.URL)
 			d.Set("filename", p.Filename)
 			d.Set("description", p.Description)

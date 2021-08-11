@@ -39,14 +39,14 @@ var (
 func (pt PackageType) String() string {
 	i := int(pt)
 
-	return ValidPackageTypes[i]
+	return ValidPackageTypes[i-1]
 }
 
 // PackageTypeFromString parses the string into a PackageType
 func PackageTypeFromString(s string) (PackageType, error) {
 	for i, sd := range ValidPackageTypes {
 		if s == sd {
-			return PackageType(i), nil
+			return PackageType(i + 1), nil
 		}
 
 	}
