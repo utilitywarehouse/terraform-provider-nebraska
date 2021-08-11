@@ -41,7 +41,7 @@ resource "nebraska_package" "test" {
 resource "nebraska_channel" "test" {
   name       = "test-terraform"
   arch       = "amd64"
-  package_id = nebraska_package.test.id 
+  package_id = nebraska_package.test.id
   color      = "#1fbb86"
 }
 
