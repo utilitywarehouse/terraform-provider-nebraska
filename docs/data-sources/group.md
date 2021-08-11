@@ -28,7 +28,7 @@ description: |-
 
 - **channel_id** (String)
 - **created_ts** (String)
-- **description** (Number)
+- **description** (String)
 - **policy_max_updates_per_period** (Number)
 - **policy_office_hours** (Boolean)
 - **policy_period_interval** (String)

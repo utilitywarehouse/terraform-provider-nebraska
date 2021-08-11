@@ -23,11 +23,11 @@ description: |-
 ### Optional
 
 - **application_id** (String)
+- **color** (String)
 - **id** (String) The ID of this resource.
 
 ### Read-Only
 
-- **color** (String)
 - **created_ts** (String)
 - **package_id** (String)
 
