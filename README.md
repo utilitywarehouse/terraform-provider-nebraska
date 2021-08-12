@@ -41,3 +41,7 @@ provider "nebraska" {
   endpoint       = "http://nebraska:8000"
 }
 ```
+
+## Development
+
+You can run the acceptance tests with `make testacc` (requires `docker-compose`).
