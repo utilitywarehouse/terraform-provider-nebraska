@@ -58,6 +58,7 @@ func resourceChannelCreate(ctx context.Context, d *schema.ResourceData, meta int
 	if err != nil {
 		return diag.FromErr(err)
 	}
+	d.Set("application_id", appID)
 
 	arch, err := nebraska.ArchFromString(d.Get("arch").(string))
 	if err != nil {
@@ -88,6 +89,8 @@ func resourceChannelRead(ctx context.Context, d *schema.ResourceData, meta inter
 	if err != nil {
 		return diag.FromErr(err)
 	}
+	d.Set("application_id", appID)
+
 	channel, err := c.GetChannel(appID, d.Id())
 	if err != nil {
 		if err == nebraska.ErrNotFound {
