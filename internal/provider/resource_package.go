@@ -21,11 +21,13 @@ func resourcePackage() *schema.Resource {
 				Type:         schema.TypeString,
 				Required:     true,
 				ValidateFunc: validation.StringIsNotEmpty,
+				Description:  "Package version.",
 			},
 			"url": {
 				Type:         schema.TypeString,
 				Required:     true,
 				ValidateFunc: validation.IsURLWithHTTPorHTTPS,
+				Description:  "URL where the package is available.",
 			},
 			"arch": {
 				Type:         schema.TypeString,
@@ -33,28 +35,34 @@ func resourcePackage() *schema.Resource {
 				ForceNew:     true,
 				ValidateFunc: validation.StringInSlice(nebraska.ValidArchs, false),
 				Default:      nebraska.ArchAll.String(),
+				Description:  "Package arch.",
 			},
 			"type": {
 				Type:         schema.TypeString,
 				Optional:     true,
 				ValidateFunc: validation.StringInSlice(nebraska.ValidPackageTypes, false),
 				Default:      nebraska.PackageTypeFlatcar.String(),
+				Description:  "Type of package.",
 			},
 			"filename": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "The filename of the package.",
 			},
 			"description": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "A description of the package.",
 			},
 			"size": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "The size, in bytes.",
 			},
 			"hash": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "A base64 encoded sha1 hash of the package digest. Tip: `cat update.gz | openssl dgst -sha1 -binary | base64`.",
 			},
 			"channels_blacklist": {
 				Type:     schema.TypeList,
@@ -62,12 +70,14 @@ func resourcePackage() *schema.Resource {
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
+				Description: "A list of channels (by id) that cannot point to this package.",
 			},
 			"flatcar_action": {
-				Type:     schema.TypeList,
-				MaxItems: 1,
-				Optional: true,
-				Computed: true,
+				Type:        schema.TypeList,
+				MaxItems:    1,
+				Optional:    true,
+				Computed:    true,
+				Description: "A Flatcar specific Omaha action.",
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": {
@@ -83,8 +93,9 @@ func resourcePackage() *schema.Resource {
 							Computed: true,
 						},
 						"sha256": {
-							Type:     schema.TypeString,
-							Required: true,
+							Type:        schema.TypeString,
+							Required:    true,
+							Description: "A base64 encoded sha256 hash of the action. Tip: `cat update.gz | openssl dgst -sha256 -binary | base64`.",
 						},
 						"needs_admin": {
 							Type:     schema.TypeBool,
@@ -118,14 +129,16 @@ func resourcePackage() *schema.Resource {
 				},
 			},
 			"application_id": {
-				Type:     schema.TypeString,
-				Optional: true,
-				ForceNew: true,
-				Computed: true,
+				Type:        schema.TypeString,
+				Optional:    true,
+				ForceNew:    true,
+				Computed:    true,
+				Description: "ID of the application this package belongs to.",
 			},
 			"created_ts": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "Creation timestamp.",
 			},
 		},
 	}
