@@ -2,7 +2,7 @@ version: "3"
 
 services:
   postgres:
-    image: postgres:${PGVERSION:-latest}
+    image: postgres:13-alpine
     volumes:
       - ./sql:/docker-entrypoint-initdb.d/
     restart: always
@@ -10,7 +10,7 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "test"
   nebraska:
-    image: quay.io/flatcar/nebraska:2.3.3
+    image: "quay.io/flatcar/nebraska:${NEBRASKA_VERSION:-2.4.1}"
     command:
       - /nebraska/nebraska
       - -auth-mode=noop
