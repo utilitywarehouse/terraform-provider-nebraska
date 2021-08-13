@@ -17,8 +17,8 @@ description: |-
 
 ### Required
 
-- **arch** (String)
-- **version** (String)
+- **arch** (String) Package arch.
+- **version** (String) Package version.
 
 ### Optional
 
@@ -27,15 +27,15 @@ description: |-
 
 ### Read-Only
 
-- **channels_blacklist** (List of String)
-- **created_ts** (String)
-- **description** (String)
-- **filename** (String)
-- **flatcar_action** (List of Object) (see [below for nested schema](#nestedatt--flatcar_action))
-- **hash** (String)
-- **size** (String)
-- **type** (String)
-- **url** (String)
+- **channels_blacklist** (List of String) A list of channels (by id) that cannot point to this package.
+- **created_ts** (String) Creation timestamp.
+- **description** (String) A description of the package.
+- **filename** (String) The filename of the package.
+- **flatcar_action** (List of Object) A Flatcar specific Omaha action. (see [below for nested schema](#nestedatt--flatcar_action))
+- **hash** (String) A base64 encoded sha1 hash of the package digest.
+- **size** (String) The size, in bytes.
+- **type** (String) Type of package.
+- **url** (String) URL where the package is available.
 
 <a id="nestedatt--flatcar_action"></a>
 ### Nested Schema for `flatcar_action`
