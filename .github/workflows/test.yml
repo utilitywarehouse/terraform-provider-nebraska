@@ -49,6 +49,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        nebraska:
+          - '2.3.5'
+          - '2.4.1'
         # list whatever Terraform versions here you would like to support
         terraform:
           - '1.0.4'
@@ -72,10 +75,5 @@ jobs:
       env:
         TF_ACC: "1"
         TF_ACC_TERRAFORM_VERSION: ${{ matrix.terraform }}
-
-        # Set whatever additional acceptance test env vars here. You can
-        # optionally use data from your repository secrets using the
-        # following syntax:
-        # SOME_VAR: ${{ secrets.SOME_VAR }}
-
+        NEBRASKA_VERSION: ${{ matrix.nebraska }}
       run: make testacc
