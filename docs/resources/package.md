@@ -17,32 +17,32 @@ description: |-
 
 ### Required
 
-- **url** (String)
-- **version** (String)
+- **url** (String) URL where the package is available.
+- **version** (String) Package version.
 
 ### Optional
 
-- **application_id** (String)
-- **arch** (String) Defaults to `all`.
-- **channels_blacklist** (List of String)
-- **description** (String)
-- **filename** (String)
-- **flatcar_action** (Block List, Max: 1) (see [below for nested schema](#nestedblock--flatcar_action))
-- **hash** (String)
+- **application_id** (String) ID of the application this package belongs to.
+- **arch** (String) Package arch. Defaults to `all`.
+- **channels_blacklist** (List of String) A list of channels (by id) that cannot point to this package.
+- **description** (String) A description of the package.
+- **filename** (String) The filename of the package.
+- **flatcar_action** (Block List, Max: 1) A Flatcar specific Omaha action. (see [below for nested schema](#nestedblock--flatcar_action))
+- **hash** (String) A base64 encoded sha1 hash of the package digest. Tip: `cat update.gz | openssl dgst -sha1 -binary | base64`.
 - **id** (String) The ID of this resource.
-- **size** (String)
-- **type** (String) Defaults to `flatcar`.
+- **size** (String) The size, in bytes.
+- **type** (String) Type of package. Defaults to `flatcar`.
 
 ### Read-Only
 
-- **created_ts** (String)
+- **created_ts** (String) Creation timestamp.
 
 <a id="nestedblock--flatcar_action"></a>
 ### Nested Schema for `flatcar_action`
 
 Required:
 
-- **sha256** (String)
+- **sha256** (String) A base64 encoded sha256 hash of the action. Tip: `cat update.gz | openssl dgst -sha256 -binary | base64`.
 
 Read-Only:
 

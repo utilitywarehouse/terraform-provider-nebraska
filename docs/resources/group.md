@@ -17,26 +17,26 @@ Group.
 
 ### Required
 
-- **name** (String)
+- **name** (String) Name of the group.
 
 ### Optional
 
-- **application_id** (String)
-- **channel_id** (String)
-- **description** (String)
+- **application_id** (String) ID of the application this group belongs to.
+- **channel_id** (String) The channel this group provides.
+- **description** (String) A description of the group.
 - **id** (String) The ID of this resource.
-- **policy_max_updates_per_period** (Number) Defaults to `9999999`.
-- **policy_office_hours** (Boolean)
-- **policy_period_interval** (String) Defaults to `1 minutes`.
-- **policy_safe_mode** (Boolean)
-- **policy_timezone** (String)
-- **policy_update_timeout** (String) Defaults to `60 minutes`.
-- **policy_updates_enabled** (Boolean) Defaults to `true`.
-- **track** (String)
+- **policy_max_updates_per_period** (Number) The maximum number of updates that can be performed within the policy_period_interval Defaults to `9999999`.
+- **policy_office_hours** (Boolean) Only update between 9am and 5pm. Defaults to `false`.
+- **policy_period_interval** (String) Period used in combination with policy_max_updates_per_period Defaults to `1 minutes`.
+- **policy_safe_mode** (Boolean) Safe mode will only update 1 instance at a time, and stop if an update fails. Defaults to `false`.
+- **policy_timezone** (String) Timezone used to inform policy_office_hours
+- **policy_update_timeout** (String) Timeout for updates Defaults to `60 minutes`.
+- **policy_updates_enabled** (Boolean) Enable updates. Defaults to `true`.
+- **track** (String) Identifier for clients, filled with the group ID if omitted.
 
 ### Read-Only
 
-- **created_ts** (String)
-- **rollout_in_progress** (Boolean)
+- **created_ts** (String) Creation timestamp
+- **rollout_in_progress** (Boolean) Indicates whether a rollout is currently in progress for this group.
 
 

@@ -17,18 +17,18 @@ description: |-
 
 ### Required
 
-- **arch** (String)
-- **name** (String)
+- **arch** (String) Arch. Cannot be changed once created.
+- **name** (String) Name of the channel. Can be an existing one as long as the arch is different.
 
 ### Optional
 
-- **application_id** (String)
-- **color** (String)
+- **application_id** (String) ID of the application this channel belongs to.
+- **color** (String) Hex color code that informs the color of the channel in the UI.
 - **id** (String) The ID of this resource.
-- **package_id** (String)
+- **package_id** (String) The id of the package this channel provides.
 
 ### Read-Only
 
-- **created_ts** (String)
+- **created_ts** (String) Creation timestamp.
 
 

@@ -16,12 +16,14 @@ func dataSourcePackage() *schema.Resource {
 				Type:         schema.TypeString,
 				Required:     true,
 				ValidateFunc: validation.StringIsNotEmpty,
+				Description:  "Package version.",
 			},
 			"arch": {
 				Type:         schema.TypeString,
 				Required:     true,
 				ForceNew:     true,
 				ValidateFunc: validation.StringInSlice([]string{"all", "amd64", "aarch64", "x86"}, false),
+				Description:  "Package arch.",
 			},
 			"application_id": {
 				Type:     schema.TypeString,
@@ -30,36 +32,44 @@ func dataSourcePackage() *schema.Resource {
 				Computed: true,
 			},
 			"type": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "Type of package.",
 			},
 			"url": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "URL where the package is available.",
 			},
 			"filename": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The filename of the package.",
 			},
 			"description": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "A description of the package.",
 			},
 			"size": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The size, in bytes.",
 			},
 			"hash": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "A base64 encoded sha1 hash of the package digest.",
 			},
 			"created_ts": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "Creation timestamp.",
 			},
 			"flatcar_action": {
-				Type:     schema.TypeList,
-				Computed: true,
+				Type:        schema.TypeList,
+				Computed:    true,
+				Description: "A Flatcar specific Omaha action.",
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": {
@@ -115,6 +125,7 @@ func dataSourcePackage() *schema.Resource {
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
+				Description: "A list of channels (by id) that cannot point to this package.",
 			},
 		},
 	}
