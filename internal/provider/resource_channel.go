@@ -11,6 +11,8 @@ import (
 
 func resourceChannel() *schema.Resource {
 	return &schema.Resource{
+		Description: "A release channel that provides a particular package version.",
+
 		CreateContext: resourceChannelCreate,
 		ReadContext:   resourceChannelRead,
 		UpdateContext: resourceChannelUpdate,

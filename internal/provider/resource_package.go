@@ -11,6 +11,8 @@ import (
 
 func resourcePackage() *schema.Resource {
 	return &schema.Resource{
+		Description: "A versioned package of the application.",
+
 		CreateContext: resourcePackageCreate,
 		ReadContext:   resourcePackageRead,
 		UpdateContext: resourcePackageUpdate,
