@@ -10,6 +10,7 @@ import (
 
 func dataSourceGroup() *schema.Resource {
 	return &schema.Resource{
+		Description: "A group provides a particular release channel to machines and controls various options that manage the update procedure.",
 		ReadContext: dataSourceGroupRead,
 		Schema: map[string]*schema.Schema{
 			"name": {
@@ -63,17 +64,17 @@ func dataSourceGroup() *schema.Resource {
 			"policy_timezone": {
 				Type:        schema.TypeString,
 				Computed:    true,
-				Description: "Timezone used to inform policy_office_hours.",
+				Description: "Timezone used to inform `policy_office_hours`.",
 			},
 			"policy_period_interval": {
 				Type:        schema.TypeString,
 				Computed:    true,
-				Description: "Period used in combination with policy_max_updates_per_period.",
+				Description: "Period used in combination with `policy_max_updates_per_period`.",
 			},
 			"policy_max_updates_per_period": {
 				Type:        schema.TypeInt,
 				Computed:    true,
-				Description: "The maximum number of updates that can be performed within the policy_period_interval.",
+				Description: "The maximum number of updates that can be performed within the `policy_period_interval`.",
 			},
 			"policy_update_timeout": {
 				Type:        schema.TypeString,

@@ -10,6 +10,7 @@ import (
 
 func dataSourcePackage() *schema.Resource {
 	return &schema.Resource{
+		Description: "A versioned package of the application.",
 		ReadContext: dataSourcePackageRead,
 		Schema: map[string]*schema.Schema{
 			"version": {

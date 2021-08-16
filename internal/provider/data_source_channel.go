@@ -10,6 +10,7 @@ import (
 
 func dataSourceChannel() *schema.Resource {
 	return &schema.Resource{
+		Description: "A release channel that provides a particular package version.",
 		ReadContext: dataSourceChannelRead,
 		Schema: map[string]*schema.Schema{
 			"name": {

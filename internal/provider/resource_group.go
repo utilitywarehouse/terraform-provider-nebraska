@@ -11,8 +11,7 @@ import (
 
 func resourceGroup() *schema.Resource {
 	return &schema.Resource{
-		// This description is used by the documentation generator and the language server.
-		Description: "Group.",
+		Description: "A group provides a particular release channel to machines and controls various options that manage the update procedure.",
 
 		CreateContext: resourceGroupCreate,
 		ReadContext:   resourceGroupRead,
@@ -81,19 +80,19 @@ func resourceGroup() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
-				Description: "Timezone used to inform policy_office_hours",
+				Description: "Timezone used to inform `policy_office_hours`.",
 			},
 			"policy_period_interval": {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "1 minutes",
-				Description: "Period used in combination with policy_max_updates_per_period",
+				Description: "Period used in combination with `policy_max_updates_per_period`.",
 			},
 			"policy_max_updates_per_period": {
 				Type:        schema.TypeInt,
 				Optional:    true,
 				Default:     9999999,
-				Description: "The maximum number of updates that can be performed within the policy_period_interval",
+				Description: "The maximum number of updates that can be performed within the `policy_period_interval`.",
 			},
 			"policy_update_timeout": {
 				Type:        schema.TypeString,
