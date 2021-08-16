@@ -37,12 +37,14 @@ func New(version string) func() *schema.Provider {
 					Optional:     true,
 					DefaultFunc:  schema.MultiEnvDefaultFunc([]string{"NEBRASKA_APPLICATION_ID"}, ""),
 					ValidateFunc: validation.StringIsNotWhiteSpace,
+					Description:  "The default application to create resources for. If omitted then `application_id` must be set on each individual resource. Can also be set with the environment variable `NEBRASKA_APPLICATION_ID`.",
 				},
 				"endpoint": {
 					Type:         schema.TypeString,
 					Optional:     true,
 					DefaultFunc:  schema.MultiEnvDefaultFunc([]string{"NEBRASKA_ENDPOINT"}, "http://localhost:8000"),
 					ValidateFunc: validation.IsURLWithHTTPorHTTPS,
+					Description:  "The address of the Nebraska server. Can also be set with the environment variable `NEBRASKA_ENDPOINT`.",
 				},
 			},
 			DataSourcesMap: map[string]*schema.Resource{
