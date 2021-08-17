@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:13-alpine
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d/
+    restart: always
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "test"
+  nebraska:
+    image: "quay.io/flatcar/nebraska:${NEBRASKA_VERSION:-2.4.1}"
+    command:
+      - /nebraska/nebraska
+      - -auth-mode=noop
+      - -http-static-dir=/nebraska/static
+    restart: always
+    environment:
+      NEBRASKA_DB_URL: "postgres://postgres:test@postgres:5432/nebraska?sslmode=disable&connect_timeout=10"
+    ports:
+        - 8000:8000
