@@ -75,7 +75,11 @@ func (c *Client) do(req *http.Request, data interface{}) error {
 		return ErrNotFound
 	}
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
-		return fmt.Errorf("error: %s: %d", req.URL.String(), resp.StatusCode)
+		var body []byte
+		if resp.Body != nil {
+			body, _ = ioutil.ReadAll(resp.Body)
+		}
+		return fmt.Errorf("Bad response: req_uri=%s, response_code=%d, response=%s", req.URL.String(), resp.StatusCode, string(body))
 	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

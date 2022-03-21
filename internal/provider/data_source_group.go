@@ -2,6 +2,7 @@ package provider
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -98,14 +99,17 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, meta inter
 		return diag.FromErr(err)
 	}
 	d.Set("application_id", appID)
-	groups, err := c.ListGroups(appID)
+	groupPage, err := c.ListGroups(appID)
 	if err != nil {
 		return diag.FromErr(err)
 	}
+	if groupPage.Count != groupPage.TotalCount {
+		return diag.FromErr(fmt.Errorf("GET groups returned %d/%d groups. We don't paginate.", groupPage.Count, groupPage.TotalCount))
+	}
 	name := d.Get("name").(string)
-	for _, g := range groups {
+	for _, g := range groupPage.Groups {
 		if g.Name == name {
-			d.SetId(g.ID)
+			d.SetId(g.Id)
 			d.Set("description", g.Description)
 			d.Set("created_ts", g.CreatedTs.String())
 			d.Set("rollout_in_progress", g.RolloutInProgress)

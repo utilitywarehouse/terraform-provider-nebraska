@@ -6,6 +6,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/kinvolk/nebraska/backend/pkg/api"
+	"github.com/kinvolk/nebraska/backend/pkg/codegen"
 	"github.com/utilitywarehouse/terraform-provider-nebraska/nebraska"
 )
 
@@ -36,7 +38,7 @@ func resourcePackage() *schema.Resource {
 				Optional:     true,
 				ForceNew:     true,
 				ValidateFunc: validation.StringInSlice(nebraska.ValidArchs, false),
-				Default:      nebraska.ArchAll.String(),
+				Default:      api.ArchAll.String(),
 				Description:  "Package arch.",
 			},
 			"type": {
@@ -155,7 +157,7 @@ func resourcePackageCreate(ctx context.Context, d *schema.ResourceData, meta int
 	}
 	d.Set("application_id", appID)
 
-	arch, err := nebraska.ArchFromString(d.Get("arch").(string))
+	arch, err := api.ArchFromString(d.Get("arch").(string))
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -174,18 +176,22 @@ func resourcePackageCreate(ctx context.Context, d *schema.ResourceData, meta int
 		Size:              d.Get("size").(string),
 		Hash:              d.Get("hash").(string),
 		ChannelsBlacklist: expandChannelBlacklist(d.Get("channels_blacklist").([]interface{})),
-		Arch:              arch,
+		Arch:              codegen.Arch(arch),
+		ApplicationID:     nebraska.FlatcarApplicationID,
 		FlatcarAction: &nebraska.FlatcarActionInput{
 			Sha256: expandFlatcarActionSha256(d.Get("flatcar_action").([]interface{})),
 		},
 	}
 
+	if len(input.ChannelsBlacklist) == 0 {
+		input.ChannelsBlacklist = make([]string, 0)
+	}
 	pkg, err := c.AddPackage(appID, input)
 	if err != nil {
 		return diag.FromErr(err)
 	}
 
-	d.SetId(pkg.ID)
+	d.SetId(pkg.Id)
 
 	return resourcePackageRead(ctx, d, meta)
 }
@@ -212,7 +218,7 @@ func resourcePackageRead(ctx context.Context, d *schema.ResourceData, meta inter
 		return nil
 	}
 
-	if err := d.Set("type", pkg.Type.String()); err != nil {
+	if err := d.Set("type", nebraska.PackageType(pkg.Type).String()); err != nil {
 		return diag.FromErr(err)
 	}
 
@@ -220,7 +226,7 @@ func resourcePackageRead(ctx context.Context, d *schema.ResourceData, meta inter
 		return diag.FromErr(err)
 	}
 
-	if err := d.Set("url", pkg.URL); err != nil {
+	if err := d.Set("url", pkg.Url); err != nil {
 		return diag.FromErr(err)
 	}
 
@@ -248,7 +254,7 @@ func resourcePackageRead(ctx context.Context, d *schema.ResourceData, meta inter
 		return diag.FromErr(err)
 	}
 
-	if err := d.Set("arch", pkg.Arch.String()); err != nil {
+	if err := d.Set("arch", api.Arch(pkg.Arch).String()); err != nil {
 		return diag.FromErr(err)
 	}
 
@@ -264,7 +270,7 @@ func resourcePackageUpdate(ctx context.Context, d *schema.ResourceData, meta int
 	}
 	d.Set("application_id", appID)
 
-	arch, err := nebraska.ArchFromString(d.Get("arch").(string))
+	arch, err := api.ArchFromString(d.Get("arch").(string))
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -283,12 +289,16 @@ func resourcePackageUpdate(ctx context.Context, d *schema.ResourceData, meta int
 		Size:              d.Get("size").(string),
 		Hash:              d.Get("hash").(string),
 		ChannelsBlacklist: expandChannelBlacklist(d.Get("channels_blacklist").([]interface{})),
-		Arch:              arch,
+		Arch:              codegen.Arch(arch),
+		ApplicationID:     nebraska.FlatcarApplicationID,
 		FlatcarAction: &nebraska.FlatcarActionInput{
 			Sha256: expandFlatcarActionSha256(d.Get("flatcar_action").([]interface{})),
 		},
 	}
 
+	if len(input.ChannelsBlacklist) == 0 {
+		input.ChannelsBlacklist = make([]string, 0)
+	}
 	if _, err := c.UpdatePackage(appID, d.Id(), input); err != nil {
 		return diag.FromErr(err)
 	}
@@ -335,14 +345,14 @@ func expandFlatcarActionSha256(l []interface{}) string {
 	return ""
 }
 
-func flattenFlatcarAction(action *nebraska.FlatcarAction) []map[string]interface{} {
+func flattenFlatcarAction(action *codegen.FlatcarAction) []map[string]interface{} {
 	if action == nil {
 		return []map[string]interface{}{}
 	}
 
 	return []map[string]interface{}{
 		{
-			"id":                      action.ID,
+			"id":                      action.Id,
 			"event":                   action.Event,
 			"chromeos_version":        action.ChromeOSVersion,
 			"sha256":                  action.Sha256,

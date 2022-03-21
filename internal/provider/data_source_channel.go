@@ -2,10 +2,12 @@ package provider
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/kinvolk/nebraska/backend/pkg/api"
 )
 
 func dataSourceChannel() *schema.Resource {
@@ -61,16 +63,19 @@ func dataSourceChannelRead(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.FromErr(err)
 	}
 	d.Set("application_id", appID)
-	channels, err := c.ListChannels(appID)
+	channelPage, err := c.ListChannels(appID)
 	if err != nil {
 		return diag.FromErr(err)
+	}
+	if channelPage.Count != channelPage.TotalCount {
+		return diag.FromErr(fmt.Errorf("GET channels returned %d/%d channels. We don't paginate.", channelPage.Count, channelPage.TotalCount))
 	}
 	name := d.Get("name").(string)
 	arch := d.Get("arch").(string)
 
-	for _, c := range channels {
-		if c.Name == name && c.Arch.String() == arch {
-			d.SetId(c.ID)
+	for _, c := range channelPage.Channels {
+		if c.Name == name && api.Arch(c.Arch).String() == arch {
+			d.SetId(c.Id)
 			d.Set("color", c.Color)
 			d.Set("created_ts", c.CreatedTs.String())
 			d.Set("package_id", c.PackageID)

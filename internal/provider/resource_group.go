@@ -132,7 +132,7 @@ func resourceGroupCreate(ctx context.Context, d *schema.ResourceData, meta inter
 		return diag.FromErr(err)
 	}
 
-	d.SetId(group.ID)
+	d.SetId(group.Id)
 
 	return resourceGroupRead(ctx, d, meta)
 }
