@@ -50,11 +50,10 @@ jobs:
       fail-fast: false
       matrix:
         nebraska:
-          - '2.3.5'
-          - '2.4.1'
+          - '2.6.1'
         # list whatever Terraform versions here you would like to support
         terraform:
-          - '1.0.4'
+          - '1.1.7'
     steps:
 
     - name: Set up Go

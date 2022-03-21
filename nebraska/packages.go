@@ -4,7 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"time"
+
+	"github.com/kinvolk/nebraska/backend/pkg/codegen"
 )
 
 // PackageType is the type of package
@@ -54,46 +55,14 @@ func PackageTypeFromString(s string) (PackageType, error) {
 	return PackageTypeOther, ErrInvalidPackageType
 }
 
-// Package is a package in Nebraska
-type Package struct {
-	ID                string         `json:"id"`
-	Type              PackageType    `json:"type"`
-	Version           string         `json:"version"`
-	URL               string         `json:"url"`
-	Filename          string         `json:"filename"`
-	Description       string         `json:"description"`
-	Size              string         `json:"size"`
-	Hash              string         `json:"hash"`
-	CreatedTs         time.Time      `json:"created_ts"`
-	ChannelsBlacklist []string       `json:"channels_blacklist"`
-	ApplicationID     string         `json:"application_id"`
-	FlatcarAction     *FlatcarAction `json:"flatcar_action"`
-	Arch              Arch           `json:"arch"`
-}
-
-// FlatcarAction is a flatcar action
-type FlatcarAction struct {
-	ID                    string    `json:"id"`
-	Event                 string    `json:"event"`
-	ChromeOSVersion       string    `json:"chromeos_version"`
-	Sha256                string    `json:"sha256"`
-	NeedsAdmin            bool      `json:"needs_admin"`
-	IsDelta               bool      `json:"is_delta"`
-	DisablePayloadBackoff bool      `json:"disable_payload_backoff"`
-	MetadataSignatureRsa  string    `json:"metadata_signature_rsa"`
-	MetadataSize          string    `json:"metadata_size"`
-	Deadline              string    `json:"deadline"`
-	CreatedTs             time.Time `json:"created_ts"`
-}
-
 // GetPackage retrieves a package by its id
-func (c *Client) GetPackage(appID, id string) (*Package, error) {
+func (c *Client) GetPackage(appID, id string) (*codegen.Package, error) {
 	req, err := c.newRequest(http.MethodGet, fmt.Sprintf("/api/apps/%s/packages/%s", appID, id), nil)
 	if err != nil {
 		return nil, err
 	}
 
-	data := &Package{}
+	data := &codegen.Package{}
 	if err := c.do(req, data); err != nil {
 		return nil, err
 	}
@@ -102,14 +71,14 @@ func (c *Client) GetPackage(appID, id string) (*Package, error) {
 }
 
 // ListPackages lists the packages for a particular application
-func (c *Client) ListPackages(appID string) ([]*Package, error) {
-	req, err := c.newRequest(http.MethodGet, fmt.Sprintf("/api/apps/%s/packages", appID), nil)
+func (c *Client) ListPackages(appID string) (*codegen.PackagePage, error) {
+	req, err := c.newRequest(http.MethodGet, fmt.Sprintf("/api/apps/%s/packages?page=1&perpage=10000", appID), nil)
 	if err != nil {
 		return nil, err
 	}
 
-	data := []*Package{}
-	if err := c.do(req, &data); err != nil {
+	data := &codegen.PackagePage{}
+	if err := c.do(req, data); err != nil {
 		return nil, err
 	}
 
@@ -118,16 +87,17 @@ func (c *Client) ListPackages(appID string) ([]*Package, error) {
 
 // AddPackageInput are the supported arguments when adding a package
 type AddPackageInput struct {
-	Type              PackageType         `json:"type"`
-	Version           string              `json:"version"`
-	URL               string              `json:"url"`
-	Filename          string              `json:"filename"`
-	Description       string              `json:"description"`
-	Size              string              `json:"size"`
-	Hash              string              `json:"hash"`
+	ApplicationID     string              `json:"application_id"`
+	Arch              codegen.Arch        `json:"arch"`
 	ChannelsBlacklist []string            `json:"channels_blacklist"`
-	Arch              Arch                `json:"arch"`
+	Description       string              `json:"description"`
+	Filename          string              `json:"filename"`
 	FlatcarAction     *FlatcarActionInput `json:"flatcar_action"`
+	Hash              string              `json:"hash"`
+	Size              string              `json:"size"`
+	Type              PackageType         `json:"type"`
+	URL               string              `json:"url"`
+	Version           string              `json:"version"`
 }
 
 // FlatcarActionInput are the supported arguments when assigning a flatcar
@@ -137,13 +107,13 @@ type FlatcarActionInput struct {
 }
 
 // AddPackage adds a new package
-func (c *Client) AddPackage(appID string, input *AddPackageInput) (*Package, error) {
+func (c *Client) AddPackage(appID string, input *AddPackageInput) (*codegen.Package, error) {
 	req, err := c.newRequest(http.MethodPost, fmt.Sprintf("/api/apps/%s/packages", appID), input)
 	if err != nil {
 		return nil, err
 	}
 
-	data := &Package{}
+	data := &codegen.Package{}
 	if err := c.do(req, data); err != nil {
 		return nil, err
 	}
@@ -153,26 +123,27 @@ func (c *Client) AddPackage(appID string, input *AddPackageInput) (*Package, err
 
 // UpdatePackageInput are the supported arguments when updating a package
 type UpdatePackageInput struct {
-	Type              PackageType         `json:"type"`
-	Version           string              `json:"version"`
-	URL               string              `json:"url"`
-	Filename          string              `json:"filename"`
-	Description       string              `json:"description"`
-	Size              string              `json:"size"`
-	Hash              string              `json:"hash"`
+	ApplicationID     string              `json:"application_id"`
+	Arch              codegen.Arch        `json:"arch"`
 	ChannelsBlacklist []string            `json:"channels_blacklist"`
-	Arch              Arch                `json:"arch"`
+	Description       string              `json:"description"`
+	Filename          string              `json:"filename"`
 	FlatcarAction     *FlatcarActionInput `json:"flatcar_action"`
+	Hash              string              `json:"hash"`
+	Size              string              `json:"size"`
+	Type              PackageType         `json:"type"`
+	URL               string              `json:"url"`
+	Version           string              `json:"version"`
 }
 
 // UpdatePackage updates an existing package
-func (c *Client) UpdatePackage(appID, id string, input *UpdatePackageInput) (*Package, error) {
+func (c *Client) UpdatePackage(appID, id string, input *UpdatePackageInput) (*codegen.Package, error) {
 	req, err := c.newRequest(http.MethodPut, fmt.Sprintf("/api/apps/%s/packages/%s", appID, id), input)
 	if err != nil {
 		return nil, err
 	}
 
-	data := &Package{}
+	data := &codegen.Package{}
 	if err := c.do(req, data); err != nil {
 		return nil, err
 	}

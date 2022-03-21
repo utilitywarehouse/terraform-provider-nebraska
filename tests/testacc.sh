@@ -7,9 +7,9 @@ TIMEOUT=${TIMEOUT:-30}
 command -v docker-compose >/dev/null \
   || { echo "ERROR: tests require docker-compose"; exit 1; }
 
-docker-compose -f "$(pwd)"/tests/docker-compose.yml up -d
+docker-compose -f $PWD/tests/docker-compose.yml up -d
 
-trap "docker-compose -f $(pwd)/tests/docker-compose.yml down"  EXIT
+trap "docker-compose -f $PWD/tests/docker-compose.yml down" EXIT
 
 echo "Waiting for Nebraska to be up"
 i=0

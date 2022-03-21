@@ -2,10 +2,13 @@ package provider
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/kinvolk/nebraska/backend/pkg/api"
+	"github.com/utilitywarehouse/terraform-provider-nebraska/nebraska"
 )
 
 func dataSourcePackage() *schema.Resource {
@@ -140,18 +143,21 @@ func dataSourcePackageRead(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.FromErr(err)
 	}
 	d.Set("application_id", appID)
-	packages, err := c.ListPackages(appID)
+	packagePage, err := c.ListPackages(appID)
 	if err != nil {
 		return diag.FromErr(err)
+	}
+	if packagePage.Count != packagePage.TotalCount {
+		return diag.FromErr(fmt.Errorf("GET packages returned %d/%d packages. We don't paginate.", packagePage.Count, packagePage.TotalCount))
 	}
 	version := d.Get("version").(string)
 	arch := d.Get("arch").(string)
 
-	for _, p := range packages {
-		if p.Version == version && p.Arch.String() == arch {
-			d.SetId(p.ID)
-			d.Set("type", p.Type.String())
-			d.Set("url", p.URL)
+	for _, p := range packagePage.Packages {
+		if p.Version == version && api.Arch(p.Arch).String() == arch {
+			d.SetId(p.Id)
+			d.Set("type", nebraska.PackageType(p.Type).String())
+			d.Set("url", p.Url)
 			d.Set("filename", p.Filename)
 			d.Set("description", p.Description)
 			d.Set("size", p.Size)
