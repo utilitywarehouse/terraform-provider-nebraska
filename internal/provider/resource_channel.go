@@ -6,6 +6,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/kinvolk/nebraska/backend/pkg/api"
+	"github.com/kinvolk/nebraska/backend/pkg/codegen"
 	"github.com/utilitywarehouse/terraform-provider-nebraska/nebraska"
 )
 
@@ -68,7 +70,7 @@ func resourceChannelCreate(ctx context.Context, d *schema.ResourceData, meta int
 	}
 	d.Set("application_id", appID)
 
-	arch, err := nebraska.ArchFromString(d.Get("arch").(string))
+	arch, err := api.ArchFromString(d.Get("arch").(string))
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -77,7 +79,7 @@ func resourceChannelCreate(ctx context.Context, d *schema.ResourceData, meta int
 		Name:      d.Get("name").(string),
 		Color:     d.Get("color").(string),
 		PackageID: d.Get("package_id").(string),
-		Arch:      arch,
+		Arch:      codegen.Arch(arch),
 	}
 
 	channel, err := c.AddChannel(appID, input)
@@ -85,7 +87,7 @@ func resourceChannelCreate(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.FromErr(err)
 	}
 
-	d.SetId(channel.ID)
+	d.SetId(channel.Id)
 
 	return resourceChannelRead(ctx, d, meta)
 }
@@ -140,9 +142,10 @@ func resourceChannelUpdate(ctx context.Context, d *schema.ResourceData, meta int
 	}
 
 	input := &nebraska.UpdateChannelInput{
-		Name:      d.Get("name").(string),
-		Color:     d.Get("color").(string),
-		PackageID: d.Get("package_id").(string),
+		Name:          d.Get("name").(string),
+		Color:         d.Get("color").(string),
+		PackageID:     d.Get("package_id").(string),
+		ApplicationID: appID,
 	}
 
 	if _, err := c.UpdateChannel(appID, d.Id(), input); err != nil {

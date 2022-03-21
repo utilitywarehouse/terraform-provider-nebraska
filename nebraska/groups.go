@@ -3,36 +3,18 @@ package nebraska
 import (
 	"fmt"
 	"net/http"
-	"time"
+
+	"github.com/kinvolk/nebraska/backend/pkg/codegen"
 )
 
-// Group is a group in Nebraska
-type Group struct {
-	ID                        string    `json:"id"`
-	Name                      string    `json:"name"`
-	Description               string    `json:"description"`
-	CreatedTs                 time.Time `json:"created_ts"`
-	RolloutInProgress         bool      `json:"rollout_in_progress"`
-	ApplicationID             string    `json:"application_id"`
-	ChannelID                 string    `json:"channel_id"`
-	PolicyUpdatesEnabled      bool      `json:"policy_updates_enabled"`
-	PolicySafeMode            bool      `json:"policy_safe_mode"`
-	PolicyOfficeHours         bool      `json:"policy_office_hours"`
-	PolicyTimezone            string    `json:"policy_timezone"`
-	PolicyPeriodInterval      string    `json:"policy_period_interval"`
-	PolicyMaxUpdatesPerPeriod int       `json:"policy_max_updates_per_period"`
-	PolicyUpdateTimeout       string    `json:"policy_update_timeout"`
-	Track                     string    `json:"track"`
-}
-
 // GetGroup retrieves a group by its id
-func (c *Client) GetGroup(appID, id string) (*Group, error) {
+func (c *Client) GetGroup(appID, id string) (*codegen.Group, error) {
 	req, err := c.newRequest(http.MethodGet, fmt.Sprintf("/api/apps/%s/groups/%s", appID, id), nil)
 	if err != nil {
 		return nil, err
 	}
 
-	data := &Group{}
+	data := &codegen.Group{}
 	if err := c.do(req, data); err != nil {
 		return nil, err
 	}
@@ -41,14 +23,14 @@ func (c *Client) GetGroup(appID, id string) (*Group, error) {
 }
 
 // ListGroups lists the groups for a particular application
-func (c *Client) ListGroups(appID string) ([]*Group, error) {
-	req, err := c.newRequest(http.MethodGet, fmt.Sprintf("/api/apps/%s/groups", appID), nil)
+func (c *Client) ListGroups(appID string) (*codegen.GroupPage, error) {
+	req, err := c.newRequest(http.MethodGet, fmt.Sprintf("/api/apps/%s/groups?page=1&perpage=10000", appID), nil)
 	if err != nil {
 		return nil, err
 	}
 
-	data := []*Group{}
-	if err := c.do(req, &data); err != nil {
+	data := &codegen.GroupPage{}
+	if err := c.do(req, data); err != nil {
 		return nil, err
 	}
 
@@ -71,13 +53,13 @@ type AddGroupInput struct {
 }
 
 // AddGroup adds a new group
-func (c *Client) AddGroup(appID string, input *AddGroupInput) (*Group, error) {
+func (c *Client) AddGroup(appID string, input *AddGroupInput) (*codegen.Group, error) {
 	req, err := c.newRequest(http.MethodPost, fmt.Sprintf("/api/apps/%s/groups", appID), input)
 	if err != nil {
 		return nil, err
 	}
 
-	data := &Group{}
+	data := &codegen.Group{}
 	if err := c.do(req, data); err != nil {
 		return nil, err
 	}
@@ -101,13 +83,13 @@ type UpdateGroupInput struct {
 }
 
 // UpdateGroup updates an existing group
-func (c *Client) UpdateGroup(appID, id string, input *UpdateGroupInput) (*Group, error) {
+func (c *Client) UpdateGroup(appID, id string, input *UpdateGroupInput) (*codegen.Group, error) {
 	req, err := c.newRequest(http.MethodPut, fmt.Sprintf("/api/apps/%s/groups/%s", appID, id), input)
 	if err != nil {
 		return nil, err
 	}
 
-	data := &Group{}
+	data := &codegen.Group{}
 	if err := c.do(req, data); err != nil {
 		return nil, err
 	}
