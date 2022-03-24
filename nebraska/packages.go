@@ -70,9 +70,9 @@ func (c *Client) GetPackage(appID, id string) (*codegen.Package, error) {
 	return data, nil
 }
 
-// ListPackages lists the packages for a particular application
-func (c *Client) ListPackages(appID string) (*codegen.PackagePage, error) {
-	req, err := c.newRequest(http.MethodGet, fmt.Sprintf("/api/apps/%s/packages?page=1&perpage=10000", appID), nil)
+// SearchPackages lists the packages for a particular application and version
+func (c *Client) SearchPackages(appID, id string) (*codegen.PackagePage, error) {
+	req, err := c.newRequest(http.MethodGet, fmt.Sprintf("/api/apps/%s/packages?page=1&perpage=100000&searchVersion=%s", appID, id), nil)
 	if err != nil {
 		return nil, err
 	}

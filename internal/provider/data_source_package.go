@@ -143,15 +143,17 @@ func dataSourcePackageRead(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.FromErr(err)
 	}
 	d.Set("application_id", appID)
-	packagePage, err := c.ListPackages(appID)
+
+	version := d.Get("version").(string)
+	arch := d.Get("arch").(string)
+
+	packagePage, err := c.SearchPackages(appID, version)
 	if err != nil {
 		return diag.FromErr(err)
 	}
 	if packagePage.Count != packagePage.TotalCount {
 		return diag.FromErr(fmt.Errorf("GET packages returned %d/%d packages. We don't paginate.", packagePage.Count, packagePage.TotalCount))
 	}
-	version := d.Get("version").(string)
-	arch := d.Get("arch").(string)
 
 	for _, p := range packagePage.Packages {
 		if p.Version == version && api.Arch(p.Arch).String() == arch {
