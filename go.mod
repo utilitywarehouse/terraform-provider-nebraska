@@ -1,11 +1,11 @@
 module github.com/utilitywarehouse/terraform-provider-nebraska
 
-go 1.17
+go 1.18
 
 require (
 	github.com/hashicorp/terraform-plugin-docs v0.7.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.12.0
-	github.com/kinvolk/nebraska/backend v0.0.0-20220318103735-d7824a66ccc3
+	github.com/kinvolk/nebraska/backend v0.0.0-20220328145249-2906acaba0ce
 	gotest.tools v2.2.0+incompatible
 )
 
@@ -22,7 +22,7 @@ require (
 	github.com/deepmap/oapi-codegen v1.9.1 // indirect
 	github.com/doug-martin/goqu/v9 v9.18.0 // indirect
 	github.com/fatih/color v1.13.0 // indirect
-	github.com/getkin/kin-openapi v0.92.0 // indirect
+	github.com/getkin/kin-openapi v0.93.0 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-gorp/gorp/v3 v3.0.2 // indirect
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
@@ -86,14 +86,14 @@ require (
 	github.com/vmihailenco/msgpack/v4 v4.3.12 // indirect
 	github.com/vmihailenco/tagparser v0.1.2 // indirect
 	github.com/zclconf/go-cty v1.10.0 // indirect
-	golang.org/x/crypto v0.0.0-20220315160706-3147a52a75dd // indirect
-	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
-	golang.org/x/sys v0.0.0-20220319134239-a9b59b0215f8 // indirect
+	golang.org/x/crypto v0.0.0-20220321153916-2c7772ba3064 // indirect
+	golang.org/x/net v0.0.0-20220325170049-de3da57026de // indirect
+	golang.org/x/sys v0.0.0-20220328115105-d36c6a25d886 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/genproto v0.0.0-20220317150908-0efb43f6373e // indirect
+	google.golang.org/genproto v0.0.0-20220328180837-c47567c462d1 // indirect
 	google.golang.org/grpc v1.45.0 // indirect
-	google.golang.org/protobuf v1.27.1 // indirect
+	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/guregu/null.v4 v4.0.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
