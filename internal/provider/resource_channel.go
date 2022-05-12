@@ -140,12 +140,17 @@ func resourceChannelUpdate(ctx context.Context, d *schema.ResourceData, meta int
 	if err != nil {
 		return diag.FromErr(err)
 	}
+	arch, err := api.ArchFromString(d.Get("arch").(string))
+	if err != nil {
+		return diag.FromErr(err)
+	}
 
 	input := &nebraska.UpdateChannelInput{
 		Name:          d.Get("name").(string),
 		Color:         d.Get("color").(string),
 		PackageID:     d.Get("package_id").(string),
 		ApplicationID: appID,
+		Arch:          codegen.Arch(arch),
 	}
 
 	if _, err := c.UpdateChannel(appID, d.Id(), input); err != nil {
