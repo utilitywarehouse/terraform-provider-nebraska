@@ -63,10 +63,11 @@ func (c *Client) AddChannel(appID string, input *AddChannelInput) (*codegen.Chan
 
 // UpdateChannelInput are the supported arguments when updating a channel
 type UpdateChannelInput struct {
-	Name          string `json:"name"`
-	Color         string `json:"color"`
-	PackageID     string `json:"package_id"`
-	ApplicationID string `json:"application_id"`
+	Name          string       `json:"name"`
+	Color         string       `json:"color"`
+	PackageID     string       `json:"package_id"`
+	ApplicationID string       `json:"application_id"`
+	Arch          codegen.Arch `json:"arch"`
 }
 
 // UpdateChannel updates an existing channel
