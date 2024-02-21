@@ -46,6 +46,19 @@ func New(version string) func() *schema.Provider {
 					ValidateFunc: validation.IsURLWithHTTPorHTTPS,
 					Description:  "The address of the Nebraska server. Can also be set with the environment variable `NEBRASKA_ENDPOINT`.",
 				},
+				"username": {
+					Type:         schema.TypeString,
+					Optional:     true,
+					DefaultFunc:  schema.MultiEnvDefaultFunc([]string{"NEBRASKA_USERNAME"}, ""),
+					Description:  "The username for authentication to the Nebraska server. Can also be set with the environment variable `NEBRASKA_USERNAME`.",
+				},
+				"password": {
+					Type:         schema.TypeString,
+					Optional:     true,
+					Sensitive:    true,
+					DefaultFunc:  schema.MultiEnvDefaultFunc([]string{"NEBRASKA_PASSWORD"}, ""),
+					Description:  "The password for authentication to the Nebraska server. Can also be set with the environment variable `NEBRASKA_PASSWORD`.",
+				},
 			},
 			DataSourcesMap: map[string]*schema.Resource{
 				"nebraska_channel": dataSourceChannel(),
@@ -72,7 +85,10 @@ type apiClient struct {
 
 func providerConfigure(version string, p *schema.Provider) func(context.Context, *schema.ResourceData) (interface{}, diag.Diagnostics) {
 	return func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
-		c := nebraska.New(d.Get("endpoint").(string), p.UserAgent("terraform-provider-nebraska", version))
+		username := d.Get("username").(string)
+		password := d.Get("password").(string)
+
+		c := nebraska.New(d.Get("endpoint").(string), p.UserAgent("terraform-provider-nebraska", version), username, password)
 		return &apiClient{
 			Client:        c,
 			ApplicationID: d.Get("application_id").(string),
