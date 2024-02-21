@@ -33,7 +33,7 @@ default application for the provider to target with the `application_id`
 (`NEBRAKSA_APPLICATION_ID`) parameter.
 
 Tip: [the default Flatcar application is pre-created with the id
-`e96281a6-d1af-4bde-9a0a-97b76e56dc57`](https://github.com/kinvolk/nebraska/blob/2.4.1/backend/pkg/api/applications.go#L12).
+`e96281a6-d1af-4bde-9a0a-97b76e56dc57`](https://github.com/flatcar/nebraska/blob/2.8.6/backend/pkg/api/applications.go#L32).
 
 ```hcl
 provider "nebraska" {
