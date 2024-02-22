@@ -13,13 +13,9 @@ import (
 
 var (
 	testUserAgent = "test-user-agent"
-	username      = os.Getenv("NEBRASKA_USERNAME")
-	password      = os.Getenv("NEBRASKA_PASSWORD")
-	auth          = username + ":" + password
-	encodedAuth   = base64.StdEncoding.EncodeToString([]byte(auth))
 )
 
-func testClientServer(handler func(w http.ResponseWriter, r *http.Request)) (*Client, *httptest.Server) {
+func testClientServer(username, password string, handler func(w http.ResponseWriter, r *http.Request)) (*Client, *httptest.Server) {
 	s := httptest.NewServer(http.HandlerFunc(handler))
 	c := New(s.URL, testUserAgent, username, password)
 	return c, s
@@ -39,7 +35,12 @@ func TestClientRequest(t *testing.T) {
 		Name:       "bar",
 		Parameters: []string{"apple", "orange", "banana"},
 	}
-	c, s := testClientServer(func(w http.ResponseWriter, r *http.Request) {
+	username := os.Getenv("NEBRASKA_USERNAME")
+	password := os.Getenv("NEBRASKA_PASSWORD")
+	auth := username + ":" + password
+	encodedAuth := base64.StdEncoding.EncodeToString([]byte(auth))
+
+	c, s := testClientServer(username, password, func(w http.ResponseWriter, r *http.Request) {
 		assert.DeepEqual(t, r.Header.Get("User-Agent"), testUserAgent)
 
 		if username != "" && password != "" {
