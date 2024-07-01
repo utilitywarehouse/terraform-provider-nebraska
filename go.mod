@@ -3,7 +3,7 @@ module github.com/utilitywarehouse/terraform-provider-nebraska
 go 1.21
 
 require (
-	github.com/hashicorp/terraform-plugin-docs v0.19.3
+	github.com/hashicorp/terraform-plugin-docs v0.19.4
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.34.0
 	github.com/kinvolk/nebraska/backend v0.0.0-20240119112525-4d44da4b6b2e
 	gotest.tools v2.2.0+incompatible
