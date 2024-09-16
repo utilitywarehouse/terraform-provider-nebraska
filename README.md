@@ -30,7 +30,7 @@ The provider doesn't currently support any authentication methods.
 
 Most resources in Nebraska belong to an 'application'. You can optionally set a
 default application for the provider to target with the `application_id`
-(`NEBRAKSA_APPLICATION_ID`) parameter.
+(`NEBRASKA_APPLICATION_ID`) parameter.
 
 Tip: [the default Flatcar application is pre-created with the id
 `e96281a6-d1af-4bde-9a0a-97b76e56dc57`](https://github.com/flatcar/nebraska/blob/2.8.6/backend/pkg/api/applications.go#L32).
