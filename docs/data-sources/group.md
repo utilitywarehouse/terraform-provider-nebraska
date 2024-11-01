@@ -23,26 +23,24 @@ data "nebraska_group" "group" {
 
 ### Required
 
-- **name** (String) Name of the group.
+- `name` (String) Name of the group.
 
 ### Optional
 
-- **application_id** (String) ID of the application this group belongs to.
-- **id** (String) The ID of this resource.
+- `application_id` (String) ID of the application this group belongs to.
 
 ### Read-Only
 
-- **channel_id** (String) The channel this group provides.
-- **created_ts** (String) Creation timestamp.
-- **description** (String) A description of the group.
-- **policy_max_updates_per_period** (Number) The maximum number of updates that can be performed within the `policy_period_interval`.
-- **policy_office_hours** (Boolean) Only update between 9am and 5pm.
-- **policy_period_interval** (String) Period used in combination with `policy_max_updates_per_period`.
-- **policy_safe_mode** (Boolean) Safe mode will only update 1 instance at a time, and stop if an update fails.
-- **policy_timezone** (String) Timezone used to inform `policy_office_hours`.
-- **policy_update_timeout** (String) Timeout for updates.
-- **policy_updates_enabled** (Boolean) Are updates enabled?
-- **rollout_in_progress** (Boolean) Indicates whether a rollout is currently in progress for this group.
-- **track** (String) Identifier for clients.
-
-
+- `channel_id` (String) The channel this group provides.
+- `created_ts` (String) Creation timestamp.
+- `description` (String) A description of the group.
+- `id` (String) The ID of this resource.
+- `policy_max_updates_per_period` (Number) The maximum number of updates that can be performed within the `policy_period_interval`.
+- `policy_office_hours` (Boolean) Only update between 9am and 5pm.
+- `policy_period_interval` (String) Period used in combination with `policy_max_updates_per_period`.
+- `policy_safe_mode` (Boolean) Safe mode will only update 1 instance at a time, and stop if an update fails.
+- `policy_timezone` (String) Timezone used to inform `policy_office_hours`.
+- `policy_update_timeout` (String) Timeout for updates.
+- `policy_updates_enabled` (Boolean) Are updates enabled?
+- `rollout_in_progress` (Boolean) Indicates whether a rollout is currently in progress for this group.
+- `track` (String) Identifier for clients.

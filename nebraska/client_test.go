@@ -15,9 +15,9 @@ var (
 	testUserAgent = "test-user-agent"
 )
 
-func testClientServer(username, password string, handler func(w http.ResponseWriter, r *http.Request)) (*Client, *httptest.Server) {
+func testClientServer(username string, password string, bearer string, handler func(w http.ResponseWriter, r *http.Request)) (*Client, *httptest.Server) {
 	s := httptest.NewServer(http.HandlerFunc(handler))
-	c := New(s.URL, testUserAgent, username, password)
+	c := New(s.URL, testUserAgent, username, password, bearer)
 	return c, s
 }
 
@@ -37,15 +37,19 @@ func TestClientRequest(t *testing.T) {
 	}
 	username := os.Getenv("NEBRASKA_USERNAME")
 	password := os.Getenv("NEBRASKA_PASSWORD")
+	bearer := os.Getenv("NEBRASKA_BEARER_TOKEN")
 	auth := username + ":" + password
 	encodedAuth := base64.StdEncoding.EncodeToString([]byte(auth))
 
-	c, s := testClientServer(username, password, func(w http.ResponseWriter, r *http.Request) {
+	// create a test apparatus using basic authentication
+	c, s := testClientServer(username, password, bearer, func(w http.ResponseWriter, r *http.Request) {
 		assert.DeepEqual(t, r.Header.Get("User-Agent"), testUserAgent)
 
 		if username != "" && password != "" {
-			assert.DeepEqual(t, r.Header.Get("Authorization"), "Basic " + encodedAuth)
-    }
+			assert.DeepEqual(t, r.Header.Get("Authorization"), "Basic "+encodedAuth)
+		} else if bearer != "" {
+			assert.DeepEqual(t, r.Header.Get("Authorization"), "Bearer "+bearer)
+		}
 
 		var ts testSchema
 
