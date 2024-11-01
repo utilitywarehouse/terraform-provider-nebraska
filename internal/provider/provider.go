@@ -47,17 +47,24 @@ func New(version string) func() *schema.Provider {
 					Description:  "The address of the Nebraska server. Can also be set with the environment variable `NEBRASKA_ENDPOINT`.",
 				},
 				"username": {
-					Type:         schema.TypeString,
-					Optional:     true,
-					DefaultFunc:  schema.MultiEnvDefaultFunc([]string{"NEBRASKA_USERNAME"}, ""),
-					Description:  "The username for authentication to the Nebraska server. Can also be set with the environment variable `NEBRASKA_USERNAME`.",
+					Type:        schema.TypeString,
+					Optional:    true,
+					DefaultFunc: schema.MultiEnvDefaultFunc([]string{"NEBRASKA_USERNAME"}, ""),
+					Description: "The username for authentication to the Nebraska server. Can also be set with the environment variable `NEBRASKA_USERNAME`.",
 				},
 				"password": {
-					Type:         schema.TypeString,
-					Optional:     true,
-					Sensitive:    true,
-					DefaultFunc:  schema.MultiEnvDefaultFunc([]string{"NEBRASKA_PASSWORD"}, ""),
-					Description:  "The password for authentication to the Nebraska server. Can also be set with the environment variable `NEBRASKA_PASSWORD`.",
+					Type:        schema.TypeString,
+					Optional:    true,
+					Sensitive:   true,
+					DefaultFunc: schema.MultiEnvDefaultFunc([]string{"NEBRASKA_PASSWORD"}, ""),
+					Description: "The password for authentication to the Nebraska server. Can also be set with the environment variable `NEBRASKA_PASSWORD`.",
+				},
+				"bearer_token": {
+					Type:        schema.TypeString,
+					Optional:    true,
+					Sensitive:   true,
+					DefaultFunc: schema.MultiEnvDefaultFunc([]string{"NEBRASKA_BEARER_TOKEN"}, ""),
+					Description: "The bearer token for authentication to the Nebraska server. Can also be set with the environment variable `NEBRASKA_BEARER_TOKEN`.",
 				},
 			},
 			DataSourcesMap: map[string]*schema.Resource{
@@ -87,8 +94,9 @@ func providerConfigure(version string, p *schema.Provider) func(context.Context,
 	return func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 		username := d.Get("username").(string)
 		password := d.Get("password").(string)
+		bearerToken := d.Get("bearer_token").(string)
 
-		c := nebraska.New(d.Get("endpoint").(string), p.UserAgent("terraform-provider-nebraska", version), username, password)
+		c := nebraska.New(d.Get("endpoint").(string), p.UserAgent("terraform-provider-nebraska", version), username, password, bearerToken)
 		return &apiClient{
 			Client:        c,
 			ApplicationID: d.Get("application_id").(string),

@@ -24,5 +24,8 @@ provider "nebraska" {
 
 ### Optional
 
-- **application_id** (String) The default application to create resources for. If omitted then `application_id` must be set on each individual resource. Can also be set with the environment variable `NEBRASKA_APPLICATION_ID`.
-- **endpoint** (String) The address of the Nebraska server. Can also be set with the environment variable `NEBRASKA_ENDPOINT`.
+- `application_id` (String) The default application to create resources for. If omitted then `application_id` must be set on each individual resource. Can also be set with the environment variable `NEBRASKA_APPLICATION_ID`.
+- `bearer_token` (String, Sensitive) The bearer token for authentication to the Nebraska server. Can also be set with the environment variable `NEBRASKA_BEARER_TOKEN`.
+- `endpoint` (String) The address of the Nebraska server. Can also be set with the environment variable `NEBRASKA_ENDPOINT`.
+- `password` (String, Sensitive) The password for authentication to the Nebraska server. Can also be set with the environment variable `NEBRASKA_PASSWORD`.
+- `username` (String) The username for authentication to the Nebraska server. Can also be set with the environment variable `NEBRASKA_USERNAME`.

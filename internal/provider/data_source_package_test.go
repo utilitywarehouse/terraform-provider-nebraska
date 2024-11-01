@@ -36,6 +36,9 @@ func TestAccPackageDataSource_basic(t *testing.T) {
 }
 
 const testAccDataSourcePackage = `
+provider "nebraska" {
+}
+
 resource "nebraska_package" "test_0" {
   version  = "0.1.0"
   arch     = "amd64"

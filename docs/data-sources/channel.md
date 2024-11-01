@@ -24,18 +24,16 @@ data "nebraska_channel" "channel" {
 
 ### Required
 
-- **arch** (String) Arch.
-- **name** (String) Name of the channel.
+- `arch` (String) Arch.
+- `name` (String) Name of the channel.
 
 ### Optional
 
-- **application_id** (String) ID of the application this channel belongs to.
-- **color** (String) Hex color code of the channel on the UI.
-- **id** (String) The ID of this resource.
+- `application_id` (String) ID of the application this channel belongs to.
+- `color` (String) Hex color code of the channel on the UI.
 
 ### Read-Only
 
-- **created_ts** (String) Creation timestamp.
-- **package_id** (String) ID of this channel's package.
-
-
+- `created_ts` (String) Creation timestamp.
+- `id` (String) The ID of this resource.
+- `package_id` (String) ID of this channel's package.

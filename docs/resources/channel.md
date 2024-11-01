@@ -30,18 +30,16 @@ resource "nebraska_channel" "channel" {
 
 ### Required
 
-- **arch** (String) Arch. Cannot be changed once created.
-- **name** (String) Name of the channel. Can be an existing one as long as the arch is different.
+- `arch` (String) Arch. Cannot be changed once created.
+- `name` (String) Name of the channel. Can be an existing one as long as the arch is different.
 
 ### Optional
 
-- **application_id** (String) ID of the application this channel belongs to.
-- **color** (String) Hex color code that informs the color of the channel in the UI.
-- **id** (String) The ID of this resource.
-- **package_id** (String) The id of the package this channel provides.
+- `application_id` (String) ID of the application this channel belongs to.
+- `color` (String) Hex color code that informs the color of the channel in the UI.
+- `package_id` (String) The id of the package this channel provides.
 
 ### Read-Only
 
-- **created_ts** (String) Creation timestamp.
-
-
+- `created_ts` (String) Creation timestamp.
+- `id` (String) The ID of this resource.

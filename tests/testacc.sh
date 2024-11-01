@@ -29,3 +29,4 @@ done
 
 TF_ACC=true NEBRASKA_ENDPOINT=http://localhost:8000 go test ./... -v -timeout 120m
 TF_ACC=true NEBRASKA_ENDPOINT=http://localhost:8000 NEBRASKA_USERNAME=user NEBRASKA_PASSWORD=pass go test ./nebraska -v -timeout 120m
+TF_ACC=true NEBRASKA_ENDPOINT=http://localhost:8000 NEBRASKA_BEARER_TOKEN=token go test ./nebraska -v -timeout 120m
