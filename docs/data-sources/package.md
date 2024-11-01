@@ -24,41 +24,39 @@ data "nebraska_package" "package" {
 
 ### Required
 
-- **arch** (String) Package arch.
-- **version** (String) Package version.
+- `arch` (String) Package arch.
+- `version` (String) Package version.
 
 ### Optional
 
-- **application_id** (String)
-- **id** (String) The ID of this resource.
+- `application_id` (String)
 
 ### Read-Only
 
-- **channels_blacklist** (List of String) A list of channels (by id) that cannot point to this package.
-- **created_ts** (String) Creation timestamp.
-- **description** (String) A description of the package.
-- **filename** (String) The filename of the package.
-- **flatcar_action** (List of Object) A Flatcar specific Omaha action. (see [below for nested schema](#nestedatt--flatcar_action))
-- **hash** (String) A base64 encoded sha1 hash of the package digest.
-- **size** (String) The size, in bytes.
-- **type** (String) Type of package.
-- **url** (String) URL where the package is available.
+- `channels_blacklist` (List of String) A list of channels (by id) that cannot point to this package.
+- `created_ts` (String) Creation timestamp.
+- `description` (String) A description of the package.
+- `filename` (String) The filename of the package.
+- `flatcar_action` (List of Object) A Flatcar specific Omaha action. (see [below for nested schema](#nestedatt--flatcar_action))
+- `hash` (String) A base64 encoded sha1 hash of the package digest.
+- `id` (String) The ID of this resource.
+- `size` (String) The size, in bytes.
+- `type` (String) Type of package.
+- `url` (String) URL where the package is available.
 
 <a id="nestedatt--flatcar_action"></a>
 ### Nested Schema for `flatcar_action`
 
 Read-Only:
 
-- **chromeos_version** (String)
-- **created_ts** (String)
-- **deadline** (String)
-- **disable_payload_backoff** (Boolean)
-- **event** (String)
-- **id** (String)
-- **is_delta** (Boolean)
-- **metadata_signature_rsa** (String)
-- **metadata_size** (String)
-- **needs_admin** (Boolean)
-- **sha256** (String)
-
-
+- `chromeos_version` (String)
+- `created_ts` (String)
+- `deadline` (String)
+- `disable_payload_backoff` (Boolean)
+- `event` (String)
+- `id` (String)
+- `is_delta` (Boolean)
+- `metadata_signature_rsa` (String)
+- `metadata_size` (String)
+- `needs_admin` (Boolean)
+- `sha256` (String)
