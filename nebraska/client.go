@@ -23,24 +23,26 @@ var (
 
 // Client communicates with a Nebraska server
 type Client struct {
-	BaseURL   string
+	BaseURL string
 
 	c         *http.Client
 	userAgent string
 
-	username  string
-	password  string
+	username    string
+	password    string
+	bearerToken string
 }
 
 // New returns a new client for the given Nebraska server URL
-func New(baseURL, userAgent, username, password string) *Client {
+func New(baseURL string, userAgent string, username string, password string, bearerToken string) *Client {
 
 	return &Client{
-		BaseURL:   baseURL,
-		c:         &http.Client{},
-		userAgent: userAgent,
-		username:  username,
-		password:  password,
+		BaseURL:     baseURL,
+		c:           &http.Client{},
+		userAgent:   userAgent,
+		username:    username,
+		password:    password,
+		bearerToken: bearerToken,
 	}
 
 }
@@ -61,7 +63,9 @@ func (c *Client) newRequest(method, path string, body interface{}) (*http.Reques
 	}
 	req.Header.Add("User-Agent", c.userAgent)
 	req.Header.Add("Content-Type", "application/json")
-	if c.username != "" && c.password != "" {
+	if c.bearerToken != "" {
+		req.Header.Add("Authorization", "Bearer "+c.bearerToken)
+	} else if c.username != "" && c.password != "" {
 		req.SetBasicAuth(c.username, c.password)
 	}
 

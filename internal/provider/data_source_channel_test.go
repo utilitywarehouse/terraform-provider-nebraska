@@ -32,6 +32,9 @@ func TestAccChannelDataSource_basic(t *testing.T) {
 }
 
 const testAccDataSourceChannel = `
+provider "nebraska" {
+}
+
 resource "nebraska_package" "test" {
   version = "0.0.0"
   arch    = "amd64"

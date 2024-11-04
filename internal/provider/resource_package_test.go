@@ -36,6 +36,9 @@ func TestAccPackageResource_basic(t *testing.T) {
 }
 
 const testAccResourcePackage = `
+provider "nebraska" {
+}
+
 resource "nebraska_package" "test_0" {
   version  = "0.1.0"
   arch     = "amd64"
