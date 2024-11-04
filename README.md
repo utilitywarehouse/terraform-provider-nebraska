@@ -44,4 +44,4 @@ provider "nebraska" {
 
 ## Development
 
-You can run the acceptance tests with `make testacc` (requires `docker-compose`).
+You can run the acceptance tests with `make testacc` (requires `docker compose`).
