@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "test"
   nebraska:
-    image: "ghcr.io/kinvolk/nebraska:${NEBRASKA_VERSION:-2.8.6}"
+    image: "ghcr.io/flatcar/nebraska:${NEBRASKA_VERSION:-2.9.0}"
     command:
       - /nebraska/nebraska
       - -auth-mode=noop
