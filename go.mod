@@ -34,7 +34,7 @@ require (
 	github.com/bytedance/sonic v1.11.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
 	github.com/chenzhuoyu/iasm v0.9.1 // indirect
-	github.com/cloudflare/circl v1.6.0 // indirect
+	github.com/cloudflare/circl v1.6.1 // indirect
 	github.com/deepmap/oapi-codegen v1.16.2 // indirect
 	github.com/doug-martin/goqu/v9 v9.19.0 // indirect
 	github.com/fatih/color v1.16.0 // indirect
