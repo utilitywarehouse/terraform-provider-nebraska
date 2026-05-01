@@ -3,7 +3,7 @@ module github.com/utilitywarehouse/terraform-provider-nebraska
 go 1.25.8
 
 require (
-	github.com/hashicorp/terraform-plugin-docs v0.24.0
+	github.com/hashicorp/terraform-plugin-docs v0.25.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.40.1
 	github.com/kinvolk/nebraska/backend v0.0.0-20240119112525-4d44da4b6b2e
 	gotest.tools v2.2.0+incompatible
@@ -28,7 +28,7 @@ require (
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/bgentry/speakeasy v0.1.0 // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
-	github.com/bmatcuk/doublestar/v4 v4.9.1 // indirect
+	github.com/bmatcuk/doublestar/v4 v4.10.0 // indirect
 	github.com/bytedance/sonic v1.11.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
 	github.com/chenzhuoyu/iasm v0.9.1 // indirect
@@ -70,7 +70,7 @@ require (
 	github.com/hashicorp/hcl/v2 v2.24.0 // indirect
 	github.com/hashicorp/logutils v1.0.0 // indirect
 	github.com/hashicorp/terraform-exec v0.25.1 // indirect
-	github.com/hashicorp/terraform-json v0.27.2 // indirect
+	github.com/hashicorp/terraform-json v0.27.3-0.20260213134036-298b8f6b673a // indirect
 	github.com/hashicorp/terraform-plugin-go v0.31.0 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.10.0 // indirect
 	github.com/hashicorp/terraform-registry-address v0.4.0 // indirect
