@@ -12,14 +12,3 @@ updates:
       all:
         patterns:
           - "*"
-
-  # Maintain dependencies for Go modules
-  - package-ecosystem: "gomod"
-    directory: "/"
-    schedule:
-      # Check for updates to Go modules every weekday
-      interval: "monthly"
-    groups:
-      all:
-        patterns:
-          - "*"
